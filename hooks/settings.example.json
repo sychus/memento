@@ -1,0 +1,14 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/skills/memento-recall/scripts/recall.sh \"$(git log --format=%s -1 2>/dev/null || true)\" $(git diff --name-only HEAD 2>/dev/null | head -20 | tr '\\n' ' ')"
+          }
+        ]
+      }
+    ]
+  }
+}
