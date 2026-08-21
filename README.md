@@ -60,13 +60,13 @@ The palace layer is **[MemPalace](https://github.com/MemPalace/mempalace)** — 
 
 ```mermaid
 flowchart LR
-    A[Task starts] --> B[RECALL<br/>anchors ∩ changed files<br/>+ semantic search]
-    B --> C[Agent works<br/>with retrieved lessons]
-    C --> D{Outcome}
-    D -- "success" --> E[LEARN<br/>file lesson → inbox]
-    D -- "QA kickback / failure<br/>(external ground truth)" --> E
-    E --> F[CURATE<br/>verify, generalize, anchor<br/>promote inbox → room]
-    F --> G[palace doctor<br/>prune what code changes falsify]
+    A["Task starts"] --> B["RECALL<br/>lessons anchored to the changed files<br/>plus semantic search"]
+    B --> C["Agent works<br/>with retrieved lessons"]
+    C --> D{"Outcome"}
+    D -->|"success"| E["LEARN<br/>file lesson to inbox"]
+    D -->|"QA kickback or failure:<br/>external ground truth"| E
+    E --> F["CURATE<br/>verify, generalize, anchor<br/>promote inbox to room"]
+    F --> G["palace doctor<br/>prune what code changes falsify"]
     G --> B
 ```
 
