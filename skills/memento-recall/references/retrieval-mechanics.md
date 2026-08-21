@@ -22,8 +22,9 @@ Neither pass ranks lessons against each other. There is no global score and no t
 Every canonical drawer carries `anchors:` — repo-relative paths it describes (see the palace skill). The script does a fixed-string search for each task file across `.palace/**/*.md`, excluding `inbox/` (raw, unverified lessons never auto-surface into context).
 
 Notes:
-- Matching is substring-based on purpose: a drawer anchored to `src/auth/` matches any file under it.
+- Matching is a fixed-string search over the drawer's **full text** (anchors and body alike): a drawer surfaces when it mentions the exact path anywhere. Directory-only anchors match a file under them only if the drawer's body lists that file — scan-generated module drawers do; hand-written drawers should anchor the specific files they describe.
 - Output is capped at 15 drawers. If a single file matches more than that, the palace has a granularity problem — drawers are too thin or anchors too broad; flag it for `memento-curate`.
+- Inbox exclusion is enforced in **both** passes: a ripgrep glob here, and a result-block filter on the semantic pass (the palace miner indexes `inbox/` too, so filtering only one path leaks raw lessons through the other).
 
 ## Pass 2: semantic search
 

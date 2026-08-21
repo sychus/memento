@@ -43,5 +43,10 @@ fi
 if [ -n "$QUERY" ] && command -v palace >/dev/null 2>&1; then
   echo
   echo "### Semantically related"
-  palace search "$QUERY" 2>/dev/null || echo "(palace search unavailable — index not built? run: palace sync)"
+  # The palace miner indexes inbox/ too, so raw lessons WILL come back from
+  # semantic search — filter them at the read path. A result block starts at
+  # "  [N] wing / room"; suppress blocks whose room is inbox.
+  palace search "$QUERY" 2>/dev/null \
+    | awk '/^[[:space:]]*\[[0-9]+\]/ { skip = ($0 ~ /\/ inbox[[:space:]]*$/) } !skip { print }' \
+    || echo "(palace search unavailable — index not built? run: palace sync)"
 fi
